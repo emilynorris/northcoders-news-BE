@@ -84,6 +84,35 @@ describe('GET /api/topics', () => {
     })
   })
 
+describe ('GET /api/articles/:article_id', () => {
+  test('GET: 200 - responds with article filtered by article_id', () => {
+    return request(app)
+        .get('/api/articles/5')
+        .expect(200)
+        .then (({body}) => {
+          expect(body).toHaveProperty("article")
+          expect(typeof body.article).toBe ("object")
+        })
+  })
+  test('GET: 200 - responds with expected properties with correct data types', () => {
+    return request(app)
+      .get('/api/articles/3')
+      .expect(200)
+      .then (({body}) => {
+        expect(body.article).toHaveProperty("author", expect.any(String))
+        expect(body.article).toHaveProperty("title", expect.any(String))
+        expect(body.article).toHaveProperty("article_id", expect.any(Number))
+        expect(body.article).toHaveProperty("body", expect.any(String))
+        expect(body.article).toHaveProperty("topic", expect.any(String))
+        expect(body.article).toHaveProperty("created_at", expect.any(String))
+        expect(body.article).toHaveProperty("votes", expect.any(Number))
+        expect(body.article).toHaveProperty("article_img_url", expect.any(String))
+
+        expect(body.article).not.toHaveProperty("comment_count")
+      })
+  })
+}) 
+
 //users
 describe ('GET /api/users', () => {
   test('GET: 200 - responds with array of objects containing all users', () => {

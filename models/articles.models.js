@@ -24,4 +24,16 @@ function fetchAllArticles() {
       })
 }
 
-module.exports = { fetchAllArticles }
+function fetchArticlesById (article_id) {
+    return db
+      .query
+        (`
+        SELECT * FROM articles
+        WHERE article_id = ${article_id}
+        `)
+      .then (({rows}) => {
+        return rows[0]
+      })
+}
+
+module.exports = { fetchAllArticles , fetchArticlesById }
