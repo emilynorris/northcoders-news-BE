@@ -1,11 +1,12 @@
 const express = require("express")
 const app = express()
+const cors = require('cors')
 const { getAllTopics } = require ("./controllers/topics.controllers")
 const { getAllArticles , getArticlesById , patchArticleVotesById } = require ("./controllers/articles.controllers")
 const { getAllUsers } = require("./controllers/users.controllers")
 const { getArticleCommentsById, postComment } = require("./controllers/comments.controllers")
 
-
+app.use(cors())
 app.use("/api", express.static('public', {index: "index.html"}))
 app.use(express.json())
 
