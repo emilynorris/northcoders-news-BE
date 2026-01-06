@@ -159,6 +159,28 @@ describe ('GET /api/articles/:article_id/comments', () => {
   })
 }) 
 
+describe ('POST /api/articles/:article_id/comments', () => {
+  test('responds with posted comment', () => {
+    return request(app)
+      .post('/api/articles/1/comments')
+      .send({
+        username:"rogersop", 
+        body:"Comment test"
+      })
+      .expect(201)
+      .then (({body}) => {
+        expect(body.comment).toMatchObject ({
+          comment_id: expect.any(Number),
+          author: "rogersop",
+          body: "Comment test",
+          article_id: 1,
+          votes: 0,
+          created_at: expect.any(String)
+        })
+      })  
+  })
+})
+
 //users
 describe ('GET /api/users', () => {
   test('GET: 200 - responds with array of objects containing all users', () => {
